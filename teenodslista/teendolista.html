@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teendő Lista</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #todoInput {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #todoInput:focus {
+            border-color: #667eea;
+        }
+
+        #addButton {
+            padding: 12px 24px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #addButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        #addButton:active {
+            transform: translateY(0);
+        }
+
+        #todoList {
+            list-style: none;
+        }
+
+        #todoList li {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid #667eea;
+            font-size: 16px;
+        }
+
+        #todoList li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #999 !important;
+            background: #e9ecef !important;
+            border-left-color: #28a745 !important;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Teendő Lista</h1>
+        
+        <div class="input-container">
+            <input type="text" id="todoInput" placeholder="Új teendő...">
+            <button id="addButton">Hozzáadás</button>
+        </div>
+        
+        <ul id="todoList">
+            <li class="empty-message">Még nincsenek teendők</li>
+        </ul>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const addButton = document.getElementById('addButton');
+        const todoList = document.getElementById('todoList');
+        
+        let isEmpty = true;
+
+        function addTodo() {
+            const text = todoInput.value.trim();
+            
+            if (text === '') {
+                return;
+            }
+            
+            // Üres üzenet eltávolítása az első elem hozzáadásakor
+            if (isEmpty) {
+                todoList.innerHTML = '';
+                isEmpty = false;
+            }
+            
+            // Új listaelem létrehozása
+            const li = document.createElement('li');
+            li.textContent = text;
+            
+            // Kattintás eseménykezelő az áthúzáshoz
+            li.addEventListener('click', function() {
+                this.classList.toggle('completed');
+            });
+            
+            todoList.appendChild(li);
+            
+            // Input mező ürítése
+            todoInput.value = '';
+            todoInput.focus();
+        }
+
+        // Gombra kattintás
+        addButton.addEventListener('click', addTodo);
+
+        // Enter billentyű lenyomása
+        todoInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        });
+    </script>
+</body>
+</html>
