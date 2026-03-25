@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridgerton Chronicle - 2026 Edition</title>
+<style>
+/* Sötétzöld és Arany téma */
+:root {
+--deep-green: #0b2b26;
+--gold: #d4af37;
+--soft-white: #fdfaf6;
+--accent-gold: #c5a028;
+}
+
+body {
+background-color: var(--deep-green);
+background-image: url('https://www.transparenttextures.com/patterns/floral-paper.png');
+color: var(--soft-white);
+font-family: 'Garamond', 'Georgia', serif;
+margin: 0;
+padding: 0;
+line-height: 1.8;
+}
+
+/* Navigációs sáv */
+.top-bar {
+background: rgba(0, 0, 0, 0.4);
+padding: 12px;
+text-align: center;
+border-bottom: 2px solid var(--gold);
+font-style: italic;
+font-size: 0.95em;
+letter-spacing: 1px;
+color: var(--gold);
+}
+
+header {
+text-align: center;
+padding: 80px 20px;
+border-bottom: 5px double var(--gold);
+background: radial-gradient(circle, rgba(11,43,38,0) 0%, rgba(5,20,18,0.8) 100%);
+}
+
+h1 {
+font-size: 4em;
+margin: 0;
+color: var(--gold);
+text-transform: uppercase;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.container {
+max-width: 1100px;
+margin: 0 auto;
+padding: 40px 20px;
+}
+
+/* Lady Whistledown Pletykafal */
+.gossip-wall {
+background: var(--deep-green);
+color: var(--gold);
+padding: 45px;
+margin: 60px 0;
+border: 3px solid var(--gold);
+border-radius: 2px;
+position: relative;
+box-shadow: 12px 12px 0px var(--gold);
+}
+
+.gossip-wall h3 {
+font-family: 'Playfair Display', serif;
+text-align: center;
+color: var(--gold);
+text-transform: uppercase;
+border-bottom: 2px solid var(--gold);
+padding-bottom: 15px;
+margin-top: 0;
+margin-bottom: 25px;
+letter-spacing: 3px;
+font-size: 2em;
+}
+
+.gossip-wall p {
+font-size: 1.2em;
+font-style: italic;
+line-height: 1.7;
+text-align: justify;
+}
+
+/* Évadok szekció */
+.season-card {
+display: flex;
+align-items: center;
+margin-bottom: 80px;
+background: rgba(255, 255, 255, 0.03);
+border: 1px solid rgba(212, 175, 55, 0.2);
+padding: 25px;
+border-radius: 5px;
+transition: all 0.4s ease;
+}
+
+.season-card:hover {
+border-color: var(--gold);
+background: rgba(255, 255, 255, 0.07);
+transform: translateY(-5px);
+}
+
+.season-img {
+width: 300px;
+height: 430px;
+object-fit: cover;
+border: 3px solid var(--gold);
+box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+.season-info {
+padding: 0 40px;
+flex: 1;
+}
+
+.season-info h2 {
+color: var(--gold);
+font-size: 2.2em;
+margin-top: 0;
+border-bottom: 1px solid var(--gold);
+display: inline-block;
+}
+
+/* Táblázat */
+table {
+width: 100%;
+border-collapse: collapse;
+margin: 50px 0;
+background: rgba(0,0,0,0.3);
+box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+th, td {
+padding: 20px;
+border: 1px solid var(--gold);
+text-align: center;
+}
+
+th {
+background: var(--gold);
+color: var(--deep-green);
+text-transform: uppercase;
+font-weight: bold;
+letter-spacing: 1px;
+}
+
+td {
+font-size: 1.1em;
+}
+
+/* Netflix Gomb */
+.btn-netflix {
+display: block;
+width: fit-content;
+margin: 40px auto;
+background-color: transparent;
+color: var(--gold);
+border: 2px solid var(--gold);
+padding: 15px 45px;
+text-decoration: none;
+font-weight: bold;
+font-size: 1.2em;
+transition: 0.3s;
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+
+.btn-netflix:hover {
+background-color: var(--gold);
+color: var(--deep-green);
+box-shadow: 0 0 25px var(--gold);
+}
+
+footer {
+text-align: center;
+padding: 60px;
+font-style: italic;
+opacity: 0.8;
+color: var(--gold);
+}
+
+@media (max-width: 800px) {
+.season-card { flex-direction: column; text-align: center; }
+.season-img { width: 100%; height: auto; margin-bottom: 25px; }
+.season-info { padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+♪ Aktuális dallam: Vitamin String Quartet – <i>Wildest Dreams (String Cover)</i>
+</div>
+
+<header>
+<h1>The Bridgerton Saga</h1>
+<p><i>Botrányok, bálok és a boldogság keresése 1813-tól napjainkig</i></p>
+</header>
+
+<div class="container">
+
+    <div class="gossip-wall">
+        <h3>Kedves Olvasó!</h3>
+        <p>"Úgy tűnik, a 2026-os szezon minden eddigit felülmúl. Míg egyesek a múlt emlékeibe kapaszkodnak, a Ton szeme már az újabb botrányokon csüng. Vajon ki lesz a következő, aki elbukik a szerelem bonyolult táncában? Maradjanak éberek, mert tollam egyetlen tollvonással tönkreteheti vagy felemelheti bárki hírnevét."</p>
+        <p style="text-align: right; font-weight: bold; margin-top: 30px; font-size: 1.3em;">– Lady Whistledown</p>
+    </div>
+
+    <div class="season-card">
+        <img src="https://images.justwatch.com/poster/244068144/s718/evad-1.jpg" class="season-img" alt="1. évad">
+        <div class="season-info">
+            <h2>I. Évad: A Herceg és Én</h2>
+            <p>Daphne Bridgerton és Simon Basset megállapodása, amely az egész várost lázban tartotta. A "gyémánt" ragyogása és a herceg titkai felejthetetlen kezdést adtak a család történetének.</p>
+        </div>
+    </div>
+
+    <div class="season-card" style="flex-direction: row-reverse;">
+        <img src="https://sportshub.cbsistatic.com/i/2022/03/02/23a73de9-e18d-4693-b61b-5bd613f11c24/fm2mj5rvuaicuqe.jpg?auto=webp&width=810&height=1200&crop=0.675:1,smart" class="season-img" alt="2. évad">
+        <div class="season-info">
+            <h2>II. Évad: A Vikomt, aki Engem Szeretett</h2>
+            <p>Anthony Bridgerton és Kate Sharma összecsapása. A kötelesség és a vágy harca, ahol egyetlen vadászat vagy palló-játszma is mindent eldönthetett.</p>
+        </div>
+    </div>
+
+    <div class="season-card">
+        <img src="https://m.media-amazon.com/images/M/MV5BZmRjNDNlMDMtNDZlMS00NzE4LTk0OGMtYjQyMWY3YWFmY2I5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" class="season-img" alt="3. évad">
+        <div class="season-info">
+            <h2>III. Évad: Barátokból Szeretők</h2>
+            <p>Colin Bridgerton és Penelope Featherington meghitt története. A falvirág végre kivirágzik, és kiderül, hogy a legnagyobb titkok a legközelebbi barátok szívében rejlenek.</p>
+        </div>
+    </div>
+
+    <h2 style="text-align: center; color: var(--gold); margin-top: 100px; text-transform: uppercase; letter-spacing: 2px;">A Ton Legkedveltebb Dallamai</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Évad</th>
+                <th>Legkedveltebb zene</th>
+                <th>Eredeti híres művész</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. Évad</td>
+                <td>Wildest Dreams (Cover)</td>
+                <td>Taylor Swift</td>
+            </tr>
+            <tr>
+                <td>2. Évad</td>
+                <td>Dancing On My Own (Cover)</td>
+                <td>Robyn</td>
+            </tr>
+            <tr>
+                <td>3. Évad</td>
+                <td>Give Me Everything (Cover)</td>
+                <td>Pitbull</td>
+            </tr>
+            <tr>
+                <td>4. Évad (Várható)</td>
+                <td>You Belong With Me (Cover)</td>
+                <td>Taylor Swift</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="https://www.netflix.com/title/80232345" target="_blank" class="btn-netflix">Irány a Netflix - Nézd meg most!</a>
+
+</div>
+
+<footer>
+    <p>Készült a Bridgerton rajongók számára, 2026</p>
+    <p><i>"Flawless, my dear."</i></p>
+</footer>
+
+</body>
+</html>
