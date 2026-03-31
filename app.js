@@ -1,4 +1,4 @@
-const GH_ACCES_TOKEN= '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';
+const GH_ACCES_TOKEN= '';
 
 
 function loadNavigation() {
