@@ -7,71 +7,57 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <h1>Felhasználó keresése</h1>
     <input type="text" id="user-search-input" placeholder="Felhasználó neve">
     <button class="btn btn-primary" id="search-btn">Keresés</button>
-    <div id = "result"></div>
-    
+    <div id="result"></div>
+
     <script src="app.js"></script>
     <script>
-        async function loadUsers(fieldText){
+        function renderUsers(users) {
+            const resultDiv = document.querySelector('#result');
+            resultDiv.innerHTML = '';
+            for (const user of users) {
+                const userHtml = `<div class="card">
+                    <a href="user.html?id=${user.login}">
+                         <img src="${user.avatar_url}" alt="${user.login}" class="avatar-img">
+                    </a>
+                    <p>${user.login}</p>
+                </div>`;
+                resultDiv.innerHTML += userHtml;
+            }
+        }
+
+        async function loadUsers(fieldText) {
             try {
-              const res = await fetch('https://api.github.com/search/users?q='
-               + encodeURIComponent(fieldText),{
-                    headers: {
-                        'Authorization': 'Bearer ' + GH_ACCES_TOKEN
-                    }})
-
-
-               if(!res.ok){
-                throw Error('Hibás válasz, státuszkód:' + res.status);
-               }
-
-               const data = await res.json();
-               let resultDiv = document.querySelector("#result");
-               resultDiv.innerHTML = '';
-
-
-               for (const user of data.items){
-                const userHtml = `<div class = "card">
-                    <img src=" ${user.avatar_url}" alt="${user.login}" width ="60" height="60" style=" box-shadow: 5px 5px 10px rgba(0,0,0,0.5);">
-                    <P>${user.login}</p>
-                    <p>${user.description}</p>
-                    <p>Language: ${user.language}</p>
-
-
-                    </div>
-                    `;
-
-                    resultDiv.innerHTML += userHtml;
-               }
-
-
+                const res = await fetch('https://api.github.com/search/users?q=' + encodeURIComponent(fieldText), {
+                    headers: { 'Authorization': 'Bearer ' + GH_ACCES_TOKEN }
+                });
+                if (!res.ok) {
+                    throw Error('Hibás válasz, státuszkód:' + res.status);
+                }
+                const data = await res.json();
+                sessionStorage.setItem('lastSearch', JSON.stringify(data.items));
+                renderUsers(data.items);
             } catch (err) {
                 console.error(err);
                 alert('Hiba történt a keresés során');
             }
         }
-        const searchBtn = document.querySelector('#search-btn');
 
+        const saved = sessionStorage.getItem('lastSearch');
+        if (saved) {
+            renderUsers(JSON.parse(saved));
+        }
 
-        searchBtn.addEventListener('click', () => {
-            const field = document.querySelector('#user-search-input');
-
-            
-            
-            
-            
-            const fieldText= field.value
-            if(!fieldText){
-
-
-                alert("Hiba, adjon meg egy felhasználónevet!");
-            
-            }else{ loadUsers(fieldText);
+        document.querySelector('#search-btn').addEventListener('click', () => {
+            const fieldText = document.querySelector('#user-search-input').value;
+            if (!fieldText) {
+                alert('Hiba, adjon meg egy felhasználónevet!');
+            } else {
+                loadUsers(fieldText);
             }
         });
-        </script>
+    </script>
 </body>
 </html>
