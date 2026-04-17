@@ -17,7 +17,7 @@
 
         async function loadUser(id) {
             const res = await fetch('https://api.github.com/users/' + id, {
-                headers: { 'Authorization': 'Bearer ' + GH_ACCES_TOKEN }
+                headers: { 'Authorization': 'Bearer ' + GH_ACCESS_TOKEN }
             });
             const user = await res.json();
             const resultDiv = document.querySelector('#result');

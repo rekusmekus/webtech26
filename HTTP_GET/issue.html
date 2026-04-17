@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git App - Issue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h3 id="title"></h3>
+
+    <div class="card">
+        <p id="user"></p>
+        <p id="body"></p>
+    </div>
+
+    <h4>Discussion</h4>
+    <div id="discussion"></div>
+
+    <div id="new-comment" class="card">
+        <label for="comment">Új komment írása:</label>
+        <textarea name="comment" id="comment" rows="5"></textarea>
+        <button id="new-comment-btn" class="btn btn-primary">Küldés</button>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function checkError(res) {
+            if (!res.ok) {
+                throw 'Unexpected server error, status code: ' + res.status;
+            }
+        }
+
+        function handleError(err) {
+            if (typeof err == 'string') {
+                alert(err);
+            }
+
+            console.error(err);
+        }
+
+        function addComment(comment) {
+            const discussionElem = document.querySelector('#discussion');
+            const commentHtml = `
+                <div class="card" data-id="${comment.id}">
+                    <strong>${comment.user.login} írta ${new Date(comment.created_at).toLocaleString()}-kor:</strong>
+                    <p class="comment-body">${comment.body}</p>
+                    <button class="btn btn-primary edit-btn">Szerkesztés</button>
+                    <button class="btn btn-danger delete-btn">Törlés</button>
+                </div>
+            `;
+            discussionElem.insertAdjacentHTML('beforeend', commentHtml);
+
+            const editBtn = document.querySelector(`.card[data-id="${comment.id}"]>.edit-btn`);
+            editBtn.addEventListener('click', () => editComment(repo, comment.id));
+
+            const deleteBtn = document.querySelector(`.card[data-id="${comment.id}"]>.delete-btn`);
+            deleteBtn.addEventListener('click', () => deleteComment(repo, comment.id));
+        }
+
+        async function loadIssue(repoName, issueNumber) {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${repoName}/issues/${issueNumber}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + GH_ACCESS_TOKEN
+                    }
+                });
+
+                checkError(res);
+
+                const issue = await res.json();
+
+                const titleElem = document.querySelector('#title');
+                titleElem.textContent = issue.title;
+
+                const userElem = document.querySelector('#user');
+                userElem.innerHTML = `<strong>${issue.user.login} írta ${new Date(issue.created_at).toLocaleString()}-kor:</strong>`;
+
+                const bodyElem = document.querySelector('#body');
+                bodyElem.innerHTML = issue.body;
+            } catch (err) {
+                handleError(err);
+            }
+        }
+
+        async function loadComments(repoName, issueNumber) {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${repoName}/issues/${issueNumber}/comments`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + GH_ACCESS_TOKEN
+                    }
+                });
+
+                checkError(res);
+
+                const comments = await res.json();
+
+                for (const comment of comments) {
+                    addComment(comment);
+                }
+            } catch (err) {
+                handleError(err);
+            }
+        }
+
+
+        async function createComment(repoName, issueNumber){
+          const commentArea = document.querySelector('#comment');
+          const newComment = commentArea.value;
+            
+            try {
+
+                const res = await fetch(`https://api.github.com/repos/${repoName}/issues/${issueNumber}/comments`,{
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + GH_ACCESS_TOKEN
+                    },
+
+                    body:   JSON.stringify({body: newComment})
+                });
+
+                checkError(res);
+
+                const comment = await res.json();
+                addComment(comment);
+                commentArea.value = '';
+                
+            } catch (err) {
+
+                handleError(err);
+                
+            }
+        }
+        async function editComment(repoName, commentId){
+
+            try {
+                
+                const commentBodyElem = document.querySelector(`.card[data-id="${commentId}"]>.comment-body`);
+                const commentToUpdate = commentBodyElem.textContent;
+                const updateComment = prompt('Komment szerkesztése:', commentToUpdate);
+
+
+
+
+
+                const res = await fetch(`https://api.github.com/repos/${repoName}/issues/comments/${commentId}`,{
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': 'Bearer ' + GH_ACCESS_TOKEN
+                    },
+                    body:   JSON.stringify({body: updateComment})
+
+
+                });
+
+                checkError(res);
+
+                const comment = await res.json();
+
+                
+            } catch (err) {
+                handleError(err);
+            }
+
+        }
+
+        async function deleteComment(repoName, commentId){
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${repoName}/issues/comments/${commentId}`,{
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + GH_ACCESS_TOKEN
+                    }
+                });
+
+                if (!res.ok) {
+                    alert('Hiba a törlés során.');
+                    console.log(res.status);
+                    return;
+                }
+                
+                const commentCard = document.querySelector(`.card[data-id="${commentId}"]`);
+                if(commentCard){
+                    commentCard.remove();
+                }
+            } catch (err) {
+                handleError(err);
+            }
+            
+        }
+        
+        const params = new URLSearchParams(window.location.search);
+        const repo = params.get('repo');
+        const issue = params.get('issue');
+
+        loadIssue(repo, issue);
+        loadComments(repo, issue);
+
+        const newCommentBtn = document.querySelector('#new-comment-btn');
+        newCommentBtn.addEventListener('click', () => createComment(repo,issue));
+
+    </script>
+</body>
+
+</html>
